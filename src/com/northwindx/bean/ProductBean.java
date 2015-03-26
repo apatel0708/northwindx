@@ -24,7 +24,6 @@ import java.util.List;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
-import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.servlet.http.HttpServletRequest;
 
@@ -51,7 +50,8 @@ public class ProductBean {
 		EntityManager em = PersistenceUtil.getEntityManager();
 
 		setProductList(em.createQuery("Select p from Product p where p.categoryID = ?1", Product.class).setParameter(1, id).getResultList());
-		setCatName(em.createQuery("Select c from Category c where c.categoryID = ?1", Category.class).setParameter(1, id).getSingleResult());
+		Category cat = em.createQuery("Select c from Category c where c.categoryID = ?1", Category.class).setParameter(1, id).getSingleResult();
+		setCatName(cat);
 		
 	}
 
